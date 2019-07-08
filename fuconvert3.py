@@ -73,8 +73,7 @@ def nanoOneConvert(path):
 
 			for counter in range(records):
 				updata = unpack_from(fuformat, fdata, counter * 64)
-				datdict = ":".join(fuheader, updata)
-				print(datdict)
+
 				updata = list(updata)
 
 				for offset in range(2, k_count, 2):

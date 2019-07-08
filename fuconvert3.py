@@ -6,7 +6,7 @@
 # converts Nanocom One .fu1 fuel data files to .csv with all data intact.
 #
 #  usage:
-#  python fuconverter.py /path/to/yourfile.fu1
+#  python3 fuconverter.py /path/to/yourfile.fu1
 #  saves .csv file to same directory as source .fu1
 
 import csv
@@ -34,15 +34,15 @@ def nanoOneConvert(path):
 
 		records = len(fdata) // 64
 
-		# If word 27:28 is same as word word 29:30 log is from MSB ECU
-		if (fdata[27] == fdata[29]) and (fdata[28] == fdata[30]):
-
-			fuheader =  ['t', 'RPM', 'Road Speed', 'ECT', 'ECT mV', 'IAT', 'IAT mV',
+		fuheader =  ['t', 'RPM', 'Road Speed', 'ECT', 'ECT mV', 'IAT', 'IAT mV',
 			  			'Fuel Temp', 'Fuel Temp mV', 'TPS1 mV', 'TPS2 mV', 'Throttle %',
 						'TPS Supply mV', 'MAP kpa', 'MAP kpa raw', 'MAF Kg/hr', 'MAF mV',
 						'RPM-Idle', 'Balance 1', 'Balance 2', 'Balance 3', 'Balance 4',
 						'Balance 5',  'AAP kpa', 'AAP kpa raw','EGR Inlet','WGM 1',
 						'WGM 2', 'BATV1', 'BATV2']
+
+		# If word 27:28 is same as word 29:30 log is from MSB ECU
+		if (fdata[27] == fdata[29]) and (fdata[28] == fdata[30]):
 
 			fuformat = '>xxHBHHHHxxxxHHHHHHxxHHHHhhhhhhHHHHHHH'
 			k_count = 8
@@ -51,14 +51,10 @@ def nanoOneConvert(path):
 
 		else:
 
-			fuheader =  ['t', 'RPM', 'Road Speed', 'ECT', 'ECT mV',
-						'IAT', 'IAT mV', 'AAT', 'AAT mV',
-						'Fuel Temp', 'Fuel Temp mV',
-						'TPS1 mV', 'TPS2 mV', 'TPS3 mV', 'Throttle %', 'TPS Supply mV',
-						'MAP kpa', 'MAP kpa raw', 'MAF Kg/hr', 'MAF mV', 'RPM-Idle',
-						'Balance 1', 'Balance 2', 'Balance 3', 'Balance 4', 'Balance 5',
-						'AAP kpa', 'AAP kpa raw','EGR Inlet %','WGM % 1', 'WGM % 2',
-						'BATV1', 'BATV2']
+			eu3 = {'AAT': 7, 'AAT mV': 8, 'TPS3 mV': 13}
+
+			for k, v in eu3.items():
+				fuheader.insert(v, k)
 
 			fuformat = '>xxHBHHHHHHHHHHHHHHHHHhhhhhhHHHHHHH'
 			k_count = 10

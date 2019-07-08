@@ -85,5 +85,7 @@ def nanoOneConvert(path):
 
 
 if __name__ == '__main__':
-
-	nanoOneConvert(sys.argv[1])
+	if len(sys.argv) > 1:
+		nanoOneConvert(sys.argv[1])
+	else:
+		print(f'\nPlease specify a file to convert.\n')

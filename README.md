@@ -1,2 +1,2 @@
 # Nanocom-One-Log-Convertor
-Convert Nancom One FU logs to CSV
+Python3 script to convert Nancom One .fu1 logs to CSV
